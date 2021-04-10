@@ -1,6 +1,8 @@
-use solana_misc_derive::ensure_encodings_are_equal;
+#[macro_use]
+extern crate keys_match;
 use solana_program::pubkey::Pubkey;
 /// A sample struct with which to play.
+#[keys_match]
 #[derive(Debug)]
 pub struct AddressBookEntry {
     name: String,
@@ -17,5 +19,4 @@ impl AddressBookEntry {
 pub fn main() {
     let payto = AddressBookEntry::new("Richard".to_string(), Pubkey::new_unique());
     let b58 = bs58::encode(payto.pay_to.to_bytes()).into_string();
-    ensure_encodings_are_equal!(b58, payto);
 }

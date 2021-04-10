@@ -263,6 +263,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "keys-match"
+version = "0.1.0"
+dependencies = [
+ "bs58 0.4.0",
+ "quote",
+ "solana-program",
+ "syn",
+]
+
+[[package]]
 name = "lazy_static"
 version = "1.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -536,18 +546,8 @@ name = "solana-misc"
 version = "0.1.0"
 dependencies = [
  "bs58 0.4.0",
- "solana-misc-derive",
+ "keys-match",
  "solana-program",
-]
-
-[[package]]
-name = "solana-misc-derive"
-version = "0.1.0"
-dependencies = [
- "bs58 0.4.0",
- "quote",
- "solana-program",
- "syn",
 ]
 
 [[package]]
