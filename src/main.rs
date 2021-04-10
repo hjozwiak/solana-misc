@@ -8,7 +8,7 @@ trait KeysMatch {
 #[derive(KeysMatch)]
 pub struct AddressBookEntry {
     name: String,
-    pay_to: Pubkey,
+    pay_to: solana_program::pubkey::Pubkey,
 }
 
 impl AddressBookEntry {

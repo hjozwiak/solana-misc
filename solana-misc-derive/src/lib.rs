@@ -1,9 +1,9 @@
-#[macro_use]
 extern crate proc_macro;
 use proc_macro::TokenStream;
 use quote::quote;
 use solana_program::pubkey::Pubkey;
 use syn::{parse, parse_str, Data, DataStruct, DeriveInput, Fields, Type, TypePath};
+
 #[proc_macro_derive(KeysMatch)]
 pub fn keys_match(input: TokenStream) -> TokenStream {
     let ast: DeriveInput = syn::parse(input).unwrap();
