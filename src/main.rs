@@ -1,5 +1,5 @@
+use solana_misc_derive::ensure_encodings_are_equal;
 use solana_program::pubkey::Pubkey;
-
 /// A sample struct with which to play.
 #[derive(Debug)]
 pub struct AddressBookEntry {
@@ -16,5 +16,6 @@ impl AddressBookEntry {
 }
 pub fn main() {
     let payto = AddressBookEntry::new("Richard".to_string(), Pubkey::new_unique());
-    println!("{:#?}", payto);
+    let b58 = bs58::encode(payto.pay_to.to_bytes()).into_string();
+    ensure_encodings_are_equal!(b58, payto);
 }
