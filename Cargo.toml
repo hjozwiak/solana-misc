@@ -8,5 +8,5 @@ edition = "2018"
 
 [dependencies]
 solana-program = "1.6.4"
-keys-match = {path = "./keys-match"}
+solana-misc-derive  = {path = "./solana-misc-derive"}
 bs58 = "0.4.0"

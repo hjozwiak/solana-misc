@@ -1,5 +1,5 @@
 [package]
-name = "keys-match"
+name = "solana-misc-derive"
 version = "0.1.0"
 authors = ["hunter Jozwiak <hunter.t.joz@gmail.com>"]
 edition = "2018"
