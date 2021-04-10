@@ -4,10 +4,13 @@ use proc_macro::TokenStream;
 use quote::quote;
 use solana_program::pubkey::Pubkey;
 use syn::spanned::Spanned;
-use syn::{parse, Fields, Item, ItemStruct, TypePath};
-const PATH: TypePath = TypePath::from(solana_program::pubkey::Pubkey);
+use syn::{parse, parse_str, Fields, Item, ItemStruct, Type, TypePath};
 #[proc_macro_attribute]
 pub fn keys_match(meta: TokenStream, input: TokenStream) -> TokenStream {
+    let path: TypePath = match parse_str("solana_program::pubkey::Pubkey") {
+        Ok(p) => p,
+    };
+
     let the_item: Item = syn::parse(input).expect("Failed to parse.");
     match the_item {
         Item::Struct(ref the_struct) => {
@@ -18,8 +21,12 @@ pub fn keys_match(meta: TokenStream, input: TokenStream) -> TokenStream {
         _ => panic!(),
     }
 }
-fn count_fields(the_struct: &ItemStruct) -> u32 {
+fn count_fields(the_struct: &ItemStruct, path: TypePath) -> usize {
     match the_struct.fields {
-        fields::Named(ref fields) => fields.named.iter().count(|field| field.ty == TYPE),
+        Fields::Named(ref fields) => fields
+            .named
+            .iter()
+            .filter(|field| field.ty == Type::Path(path))
+            .count(),
     }
 }
