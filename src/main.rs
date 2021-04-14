@@ -1,14 +1,10 @@
 #[macro_use]
-extern crate solana_misc_derive;
+extern crate encodings_match;
 use solana_program::pubkey::Pubkey;
 /// A sample struct with which to play.
-trait KeysMatch {
-    fn num_matches() -> usize;
-}
-#[derive(KeysMatch)]
 pub struct AddressBookEntry {
     name: String,
-    pay_to: solana_program::pubkey::Pubkey,
+    pay_to: Pubkey,
 }
 
 impl AddressBookEntry {
@@ -21,5 +17,6 @@ impl AddressBookEntry {
 }
 pub fn main() {
     let payto = AddressBookEntry::new("Richard".to_string(), Pubkey::new_unique());
-    let _b58 = bs58::encode(payto.pay_to.to_bytes()).into_string();
+    let b58 = bs58::encode(payto.pay_to.to_bytes()).into_string();
+    ensure_match!(b58, payto.pay_to);
 }
