@@ -11,11 +11,11 @@ use syn::{
     parse::{Parse, ParseStream, Result},
     parse_macro_input,
     punctuated::Punctuated,
-    token::Bracket,
-    Expr, Ident, LitByte, LitStr, Path, Token,
+    token::{Bracket, Token},
+    Expr, ExprField, Ident, LitByte, LitStr, Path, Token,
 };
 
-fn parse_id(
+fn parse_pubkey_literal(
     input: ParseStream,
     pubkey_type: proc_macro2::TokenStream,
 ) -> Result<proc_macro2::TokenStream> {
@@ -49,7 +49,7 @@ struct ProgramSdkId(proc_macro2::TokenStream);
 
 impl Parse for ProgramSdkId {
     fn parse(input: ParseStream) -> Result<Self> {
-        parse_id(input, quote! { ::solana_program::pubkey::Pubkey }).map(Self)
+        parse_pubkey_literal(input, quote! { ::solana_program::pubkey::Pubkey }).map(Self)
     }
 }
 
@@ -84,4 +84,16 @@ fn parse_pubkey(
             [#(#bytes,)*]
         )
     })
+}
+struct EqualityProcessor(proc_macro::TokenStream);
+
+impl Parse for EqualityProcessor {
+    fn parse(input: ParseStream) -> Result<Self> {
+        input
+            .parse::<ExprField>()
+            .and(parse_pubkey_literal(
+                quote! { ::solana_program::pubkey::Pubkey},
+            ))
+            .and(Self)
+    }
 }
