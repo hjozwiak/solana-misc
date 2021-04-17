@@ -7,10 +7,8 @@ use proc_macro2::{Delimiter, Span, TokenTree};
 use quote::{quote, ToTokens};
 use std::convert::TryFrom;
 use syn::{
-    bracketed,
     parse::{Parse, ParseStream, Result},
     parse_macro_input,
-    punctuated::Punctuated,
     token::{Bracket, Token},
     Expr, ExprField, Ident, LitByte, LitStr, Path, Token,
 };
@@ -85,15 +83,14 @@ fn parse_pubkey(
         )
     })
 }
-struct EqualityProcessor(proc_macro::TokenStream);
+struct EqualityProcessor(proc_macro2::TokenStream);
 
 impl Parse for EqualityProcessor {
     fn parse(input: ParseStream) -> Result<Self> {
-        input
+        &input
             .parse::<ExprField>()
-            .and(parse_pubkey_literal(
-                quote! { ::solana_program::pubkey::Pubkey},
-            ))
-            .and(Self)
+            .and_then(Self::parse::<Token![,]>())
+            .and_then(Self::parse::<ProgramSdkId>())
+            .and_then(Self)
     }
 }
