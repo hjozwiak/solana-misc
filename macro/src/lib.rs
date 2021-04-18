@@ -1,5 +1,3 @@
-//! Helper macros for determining if a pubkey is equal to a given Base58 encoded string.
-///! Defines a proc macro to declare a pubkey locally, and a proc macro to determine whether or not a given string literal is equal to a given struct field.
 extern crate proc_macro;
 
 use proc_macro::TokenStream;
@@ -17,7 +15,7 @@ fn parse_pubkey_literal(
 ) -> Result<proc_macro2::TokenStream> {
     let pubkey = if input.peek(syn::LitStr) {
         let pubkey_literal: LitStr = input.parse()?;
-        parse_pubkey(&pubkey_literal, &pubkey_type)?
+        decode_pubkey(&pubkey_literal, &pubkey_type)?
     } else {
         let expr: Expr = input.parse()?;
         quote! { #expr }
@@ -30,11 +28,7 @@ fn parse_pubkey_literal(
     Ok(pubkey)
 }
 
-fn pubkey_to_tokens(
-    id: &proc_macro2::TokenStream,
-    pubkey_type: proc_macro2::TokenStream,
-    tokens: &mut proc_macro2::TokenStream,
-) {
+fn pubkey_to_tokens(id: &proc_macro2::TokenStream, tokens: &mut proc_macro2::TokenStream) {
     tokens.extend(quote! {
           #id
     });
@@ -50,11 +44,11 @@ impl Parse for KeyDecoder {
 
 impl ToTokens for KeyDecoder {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        pubkey_to_tokens(&self.0, quote! { ::solana_program::pubkey::Pubkey }, tokens)
+        pubkey_to_tokens(&self.0, tokens)
     }
 }
 
-fn parse_pubkey(
+fn decode_pubkey(
     id_literal: &LitStr,
     pubkey_type: &proc_macro2::TokenStream,
 ) -> Result<proc_macro2::TokenStream> {

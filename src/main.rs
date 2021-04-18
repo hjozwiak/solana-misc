@@ -18,10 +18,9 @@ impl AddressBookEntry {
     }
 }
 pub fn main() {
-    let address = "Fd7btgySsrjuo25CJCj7oE7VPMyezDhnx7pZkj2v69Nk";
     let payto = AddressBookEntry::new(
         "Richard".to_string(),
         Pubkey::from_str("Fd7btgySsrjuo25CJCj7oE7VPMyezDhnx7pZkj2v69Nk").unwrap(),
     );
-    assert_encodings_match!(payto.pay_to, "Fd7btgySsrjuo25CJCj7oE7VPMyezDhnx7pZkj2v69Nk");
+    assert_pubkeys_equal!(payto.pay_to, "Fd7btgySsrjuo25CJCj7oE7VPMyezDhnx7pZkj2v69Nk");
 }
