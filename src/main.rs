@@ -18,9 +18,9 @@ impl AddressBookEntry {
     }
 }
 pub fn main() {
-    let payto = AddressBookEntry::new("Richard".to_string(), Pubkey::new_unique());
-    let b58 = bs58::encode(payto.pay_to.to_bytes()).into_string();
-    //ensure_match!(b58, payto.pay_to);
-    // This should expand to something like this
-    declare_local_pubkey!("my11111111111111111111111111111111111111111");
+    let address = "Fd7btgySsrjuo25CJCj7oE7VPMyezDhnx7pZkj2v69Nk";
+    let payto = AddressBookEntry::new(
+        "Richard".to_string(),
+        Pubkey::from_str("Fd7btgySsrjuo25CJCj7oE7VPMyezDhnx7pZkj2v69Nk").unwrap(),
+    );
 }

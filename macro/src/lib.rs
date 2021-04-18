@@ -3,14 +3,12 @@
 extern crate proc_macro;
 
 use proc_macro::TokenStream;
-use proc_macro2::{Delimiter, Span, TokenTree};
+use proc_macro2::Span;
 use quote::{quote, ToTokens};
 use std::convert::TryFrom;
 use syn::{
     parse::{Parse, ParseStream, Result},
-    parse_macro_input,
-    token::{Bracket, Token},
-    Expr, ExprField, Ident, LitByte, LitStr, Path, Token,
+    parse_macro_input, Expr, ExprField, LitByte, LitStr, Token,
 };
 
 fn parse_pubkey_literal(
@@ -38,20 +36,19 @@ fn pubkey_to_tokens(
     tokens: &mut proc_macro2::TokenStream,
 ) {
     tokens.extend(quote! {
-         let local_pubkey: #pubkey_type = #id;
-
+          #id
     });
 }
 
-struct ProgramSdkId(proc_macro2::TokenStream);
+struct KeyDecoder(proc_macro2::TokenStream);
 
-impl Parse for ProgramSdkId {
+impl Parse for KeyDecoder {
     fn parse(input: ParseStream) -> Result<Self> {
         parse_pubkey_literal(input, quote! { ::solana_program::pubkey::Pubkey }).map(Self)
     }
 }
 
-impl ToTokens for ProgramSdkId {
+impl ToTokens for KeyDecoder {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         pubkey_to_tokens(&self.0, quote! { ::solana_program::pubkey::Pubkey }, tokens)
     }
@@ -59,7 +56,7 @@ impl ToTokens for ProgramSdkId {
 
 #[proc_macro]
 pub fn declare_local_pubkey(input: TokenStream) -> TokenStream {
-    let pubkey = parse_macro_input!(input as ProgramSdkId);
+    let pubkey = parse_macro_input!(input as KeyDecoder);
     TokenStream::from(quote! {#pubkey})
 }
 
@@ -83,14 +80,24 @@ fn parse_pubkey(
         )
     })
 }
-struct EqualityProcessor(proc_macro2::TokenStream);
 
-impl Parse for EqualityProcessor {
+struct EqualityChecker {
+    field: ExprField,
+    pubkey: KeyDecoder,
+}
+impl Parse for EqualityChecker {
     fn parse(input: ParseStream) -> Result<Self> {
-        &input
-            .parse::<ExprField>()
-            .and_then(Self::parse::<Token![,]>())
-            .and_then(Self::parse::<ProgramSdkId>())
-            .and_then(Self)
+        let field: ExprField = input.parse()?;
+        input.parse::<Token![,]>()?;
+        let pubkey: KeyDecoder = input.parse()?;
+        Ok(EqualityChecker { field, pubkey })
     }
+}
+
+#[proc_macro]
+pub fn assert_encodings_match(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    let EqualityChecker { field, pubkey } = parse_macro_input!(input as EqualityChecker);
+    TokenStream::from(quote! {
+        assert_eq!(#field, ##pubkey);
+    })
 }

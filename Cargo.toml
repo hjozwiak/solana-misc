@@ -9,4 +9,4 @@ edition = "2018"
 [dependencies]
 solana-program = "1.6.4"
 bs58 = "0.4.0"
-encodings-match = {path = "./encodings-match"}
+ solana-misc-macro = {path = "./solana-misc-macro"}
