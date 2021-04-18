@@ -1,5 +1,5 @@
 #[macro_use]
-extern crate encodings_match;
+extern crate solana_misc_macro;
 use solana_program::pubkey::Pubkey;
 use std::str::FromStr;
 
@@ -23,4 +23,5 @@ pub fn main() {
         "Richard".to_string(),
         Pubkey::from_str("Fd7btgySsrjuo25CJCj7oE7VPMyezDhnx7pZkj2v69Nk").unwrap(),
     );
+    assert_encodings_match!(payto.pay_to, "Fd7btgySsrjuo25CJCj7oE7VPMyezDhnx7pZkj2v69Nk");
 }

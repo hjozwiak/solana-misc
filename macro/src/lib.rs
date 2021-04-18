@@ -97,7 +97,8 @@ impl Parse for EqualityChecker {
 #[proc_macro]
 pub fn assert_encodings_match(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     let EqualityChecker { field, pubkey } = parse_macro_input!(input as EqualityChecker);
+    let local = quote! { #pubkey};
     TokenStream::from(quote! {
-        assert_eq!(#field, ##pubkey);
+        assert_eq!(#field, #local);
     })
 }
