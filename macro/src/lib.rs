@@ -54,12 +54,6 @@ impl ToTokens for KeyDecoder {
     }
 }
 
-#[proc_macro]
-pub fn declare_local_pubkey(input: TokenStream) -> TokenStream {
-    let pubkey = parse_macro_input!(input as KeyDecoder);
-    TokenStream::from(quote! {#pubkey})
-}
-
 fn parse_pubkey(
     id_literal: &LitStr,
     pubkey_type: &proc_macro2::TokenStream,
@@ -93,9 +87,9 @@ impl Parse for EqualityChecker {
         Ok(EqualityChecker { field, pubkey })
     }
 }
-
+/// Given a struct with a field that is of type solana_program::pubkey::Pubkey, check to see whether or not that pubkey is equal to a specific string literal in base58 encoding.
 #[proc_macro]
-pub fn assert_encodings_match(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+pub fn assert_pubkeys_equal(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     let EqualityChecker { field, pubkey } = parse_macro_input!(input as EqualityChecker);
     let local = quote! { #pubkey};
     TokenStream::from(quote! {
