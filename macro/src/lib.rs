@@ -28,12 +28,6 @@ fn parse_pubkey_literal(
     Ok(pubkey)
 }
 
-fn pubkey_to_tokens(id: &proc_macro2::TokenStream, tokens: &mut proc_macro2::TokenStream) {
-    tokens.extend(quote! {
-          #id
-    });
-}
-
 struct KeyDecoder(proc_macro2::TokenStream);
 
 impl Parse for KeyDecoder {
@@ -44,7 +38,8 @@ impl Parse for KeyDecoder {
 
 impl ToTokens for KeyDecoder {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        pubkey_to_tokens(&self.0, tokens)
+        let id = &self.0;
+        tokens.extend(quote! {#id});
     }
 }
 
