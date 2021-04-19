@@ -1,0 +1,5 @@
+error: pubkey array is not 32 bytes long: len=6
+  --> $DIR/01-fail-too-short.rs:12:37
+   |
+12 |     assert_pubkeys_equal!(test.key, "tooshort");
+   |                                     ^^^^^^^^^^
