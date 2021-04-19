@@ -5,6 +5,10 @@ fn runner() {
     t.compile_fail("tests/failures/01-fail-too-short.rs");
     // Fail to compile when the array is too long.
     t.compile_fail("tests/failures/02-fail-too-long.rs");
+    // Fail to compile when the array can't be decoded
     t.compile_fail("tests/failures/03-fail-decode.rs");
-    t.compile_fail("tests/failures/04-fail-field.rs")
+    // Fail to compile when our first argument is not a field access expression
+    t.compile_fail("tests/failures/04-fail-field.rs");
+    // Succeed when both keys are equal.
+    t.pass("tests/successes/05-succeed.rs");
 }
