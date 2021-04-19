@@ -1,0 +1,5 @@
+error: failed to decode base58 string
+  --> $DIR/03-fail-decode.rs:12:37
+   |
+12 |     assert_pubkeys_equal!(test.key, "ishouldfailtodecodethisstringstuff");
+   |                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

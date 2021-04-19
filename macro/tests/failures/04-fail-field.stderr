@@ -1,0 +1,5 @@
+error: expected struct field access
+  --> $DIR/04-fail-field.rs:13:9
+   |
+13 |         "I should be a field.",
+   |         ^^^^^^^^^^^^^^^^^^^^^^
