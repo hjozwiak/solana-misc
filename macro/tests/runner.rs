@@ -11,4 +11,7 @@ fn runner() {
     t.compile_fail("tests/failures/04-fail-field.rs");
     // Succeed when both keys are equal.
     t.pass("tests/successes/05-succeed.rs");
+    #[should_panic]
+    // Technically a success, but will panic at runtime since the keys are unequal
+    t.pass("tests/successes/06-barf-when-unequal.rs");
 }
