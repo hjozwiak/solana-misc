@@ -30,5 +30,5 @@ fn run_success() {
 #[should_panic]
 fn run_partial_success() {
     let t = trybuild::TestCases::new();
-    t.pass("06-barf-when-unequal.rs");
+    t.pass("successes/06-barf-when-unequal.rs");
 }
