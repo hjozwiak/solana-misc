@@ -11,6 +11,6 @@ updates:
       interval: "daily"
 updates:
   - package-ecosystem: cargo
-  - directory: "macro/"
-  - schedule:
-    - interval: daily
+    directory: "macro/"
+    schedule:
+      interval: daily
