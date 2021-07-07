@@ -1,5 +1,5 @@
 #[macro_use]
-extern crate solana_misc_macro;
+extern crate assert_keys_equal_macro;
 use solana_program::pubkey::Pubkey;
 struct Tester {
     key: Pubkey,
