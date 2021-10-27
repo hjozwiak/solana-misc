@@ -2,16 +2,16 @@
 name = "assert-keys-equal-macro"
 version = "0.1.0"
 authors = ["hunter Jozwiak <hunter.t.joz@gmail.com>"]
-edition = "2018"
+edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-syn = { version = "1.0.77", features = ["full"] }
+syn = { version = "1.0.81", features = ["full"] }
 solana-program = "1.8.1"
 proc-macro2 = "1.0.32"
 bs58 = "0.4.0"
-quote = "1.0.9"
-trybuild = "1.0.45"
+quote = "1.0.10"
+trybuild = "1.0.52"
 [lib]
 proc-macro = true
