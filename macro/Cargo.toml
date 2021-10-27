@@ -8,13 +8,8 @@ edition = "2018"
 
 [dependencies]
 syn = { version = "1.0.77", features = ["full"] }
-<<<<<<< HEAD
-proc-macro2 = "1.0.32"
-solana-program = "1.7.13"
-=======
-proc-macro2 = "1.0.29"
 solana-program = "1.8.1"
->>>>>>> origin/dependabot/cargo/solana-program-1.8.1
+proc-macro2 = "1.0.32"
 bs58 = "0.4.0"
 quote = "1.0.9"
 trybuild = "1.0.45"
