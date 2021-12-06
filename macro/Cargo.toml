@@ -9,7 +9,7 @@ edition = "2021"
 [dependencies]
 syn = { version = "1.0.81", features = ["full"] }
 solana-program = "1.8.5"
-proc-macro2 = "1.0.32"
+proc-macro2 = "1.0.33"
 bs58 = "0.4.0"
 quote = "1.0.10"
 trybuild = "1.0.52"
