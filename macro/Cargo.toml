@@ -7,7 +7,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-syn = { version = "1.0.87", features = ["full"] }
+syn = { version = "1.0.88", features = ["full"] }
 solana-program = "1.10.2"
 proc-macro2 = "1.0.36"
 bs58 = "0.4.0"
