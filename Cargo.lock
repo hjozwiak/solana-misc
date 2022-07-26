@@ -375,6 +375,10 @@ dependencies = [
 [[package]]
 name = "driver"
 version = "0.1.0"
+dependencies = [
+ "assert-keys-equal-macro",
+ "solana-program",
+]
 
 [[package]]
 name = "either"
